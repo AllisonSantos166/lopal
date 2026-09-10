@@ -148,3 +148,56 @@ _(Para listar todos os containers, incluindo os parados, utilize `docker ps -a`)
 
 Para remover o container interrompido do seu sistema:
 `docker rm meu-web-server`
+# Desafio 9
+
+## **Live Server** 
+O Live Server é uma ferramenta (frequentemente utilizada como extensão em editores de código como o VS Code) que cria um servidor web local na sua máquina, servindo os arquivos do seu projeto através do protocolo HTTP (`[http://127.0.0.1:5500](http://127.0.0.1:5500)` ou `http://localhost:5500`).
+
+Quando um arquivo HTML se comunica com um arquivo JavaScript via tag `<script src="main.js"></script>`, o protocolo utilizado para carregar a página altera fundamentalmente o comportamento do navegador:
+| Característica | Servidor Local (`http://` via Live Server) | Abertura Direta (`file://`)|
+|--|--|--|
+| Protocolo | HTTP / HTTPS | `file://` (Sistema de arquivos local) |
+|Módulos JS (`type="module"`)|Funciona perfeitamente|Bloqueado por políticas de segurança (CORS)|
+|Requisições AJAX / Fetch|Permite requisitar APIs e arquivos JSON|Bloqueado por restrições de origem de arquivos locais|
+|Recarregamento|Automático (_Hot Reloading_ via WebSockets)|Manual (exige pressionar `F5` a cada salvamento)|
+|Caminhos de Arquivos|Relativos e absolutos funcionam a partir da raiz|Caminhos absolutos buscam a raiz do sistema operacional|
+
+**Hospedagem de Serviços**
+
+**Hospedar um serviço** significa armazenar e executar uma aplicação, site, API ou banco de dados em um servidor remoto conectado continuamente à internet, permitindo que usuários externos o acessem via endereço IP ou nome de domínio (ex: `[www.suaempresa.com](https://www.suaempresa.com)`).
+
+**Plataformas de hospedagem mais utilizadas no mercado:**
+
+-   **Plataformas para Front-end / Sites Estáticos:** Vercel, Netlify, GitHub Pages, Cloudflare Pages.
+    
+-   **Plataformas como Serviço (PaaS) para Back-end:** Render, Railway, Fly.io, Heroku (adequadas para APIs em Node.js, Python, Java e bancos de dados).
+    
+-   **Provedores de Nuvem de Grande Porte (IaaS/PaaS):** Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure (para arquiteturas complexas e escalabilidade enterprise).
+    
+
+**Passo a Passo Prático: Comparação do Comportamento**
+
+**1. Teste com o Live Server:**
+
+1.  Abra a pasta do seu projeto no VS Code.
+    
+2.  Clique com o botão direito no `index.html` e selecione **Open with Live Server** (ou clique no botão _Go Live_ no canto inferior).
+    
+3.  Observe que o endereço na barra do navegador será `[http://127.0.0.1:5500/index.html](http://127.0.0.1:5500/index.html)`.
+    
+4.  Altere o arquivo `main.js` adicionando `console.log("Aviso via Live Server");` e salve o arquivo (`Ctrl + S`).
+    
+5.  Volte ao navegador: a página terá atualizado automaticamente e a mensagem estará no console do DevTools.
+    
+
+**2. Teste abrindo diretamente pelo Sistema de Arquivos:**
+
+1.  Abra o gerenciador de arquivos do seu computador e dê um duplo clique no arquivo `index.html`.
+    
+2.  Observe que a URL no navegador iniciará com `file:///` (ex: `file:///C:/projetos/index.html`).
+    
+3.  Volte ao VS Code, altere a mensagem no `main.js` e salve.
+    
+4.  Note que a página no navegador **não** se atualiza sozinha.
+    
+5.  Se você tentar utilizar Módulos ES no seu script (`<script type="module" src="main.js">`), ao abrir a aba _Console_ do DevTools no protocolo `file://`, você verá um erro de segurança bloqueando o carregamento do código.
