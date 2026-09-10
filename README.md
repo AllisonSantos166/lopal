@@ -48,3 +48,61 @@ git clone git@github.com:usuario/repositorio.git
 
 #### A clonagem por HTTPS
 (git clone [https://github.com/usuario/repositorio.git](https://github.com/usuario/repositorio.git)) funciona imediatamente sem pré-configuração, mas exige a validação de um token no primeiro envio de código. Com SSH, há a etapa prévia de vincular as chaves, mas as interações subsequentes ocorrem de forma transparente, pois o servidor GitHub valida automaticamente a sua chave privada local com a chave pública cadastrada.
+
+# Desafio 7
+
+
+## HTTP (Hypertext Transfer Protocol)** 
+É o protocolo base da comunicação na web para a transferência de dados entre um navegador (cliente) e um servidor, enquanto o **HTTPS (Hypertext Transfer Protocol Secure)** é a versão segura do HTTP que adiciona uma camada de criptografia via protocolo TLS (Transport Layer Security) para proteger as informações trafegadas.
+
+**Como funcionam e diferenças**
+
+-   **HTTP:** Opera enviando requisições e respostas em texto puro (_plaintext_). Qualquer intermediário na rede (roteadores, provedores de internet, pontos Wi-Fi públicos) pode ler ou alterar o conteúdo trafegado.
+    
+-   **HTTPS:** Estabelece primeiro uma conexão segura através do _TLS Handshake_, no qual cliente e servidor autenticam a identidade do servidor e negociam chaves de criptografia. Toda a comunicação HTTP subsequente passa a trafegar dentro deste canal protegido.
+
+| **Característica** | HTTP | HTTPS | 
+|--|--|--|
+| Porta Padrão | 80 | 443 |
+|Criptografia|Nenhuma (dados em texto simples)|Criptografia ponta a ponta (TLS/SSL)|
+|Autenticidade|Não garante a identidade do servidor|Validada por Certificado Digital|
+|Navegadores|Marcado como "Não seguro"|Conexão sinalizada como segura|
+
+**Importância no Desenvolvimento Web** 
+A criptografia previne ataques como _Man-in-the-Middle_ (interceptação e alteração de dados) e roubo de credenciais ou dados bancários. No desenvolvimento web moderno, o HTTPS é indispensável porque:
+
+-   É pré-requisito para APIs modernas do navegador (como Geolocalização, Service Workers/PWA e acesso à Câmera).
+    
+-   É um fator direto de ranqueamento em mecanismos de busca (SEO).
+    
+-   Impede que os navegadores exibam alertas ostensivos de insegurança ao usuário.
+    
+
+## **Prático: Inspecionando Requisições e Certificados no Navegador**
+
+**1. Comparando requisições na aba Network**
+
+1.  Abra o navegador e acione as Ferramentas do Desenvolvedor pressionando `F12` (ou `Ctrl + Shift + I` / `Cmd + Option + I`).
+    
+2.  Vá até a aba **Network** (Rede).
+    
+3.  Ao acessar um site **HTTP** (ex: `[http://neverssl.com](http://neverssl.com)`), selecione a requisição principal na lista. Na guia **Headers**, você verá o esquema de URL `http://` e os dados trafegando sem criptografia.
+    
+4.  Ao acessar um site **HTTPS** (ex: `[https://github.com](https://github.com)`), selecione a requisição. Na guia **Headers**, observe a URL `https://`. No tráfego real de rede, todo o payload (conteúdo, formulários e cookies) viaja indecifrável para terceiros.
+    
+
+**2. Verificando o Certificado de Segurança**
+
+1.  Na barra de endereço do navegador, clique no ícone de configurações ao lado da URL HTTPS (ícone de ajuste ou cadeado).
+    
+2.  Clique em **A conexão é segura** e selecione **O certificado é válido**.
+    
+3.  Na janela exibida, verifique os campos principais:
+    
+    -   **Emitido para (Subject):** Garante que o certificado pertence ao domínio acessado.
+        
+    -   **Emitido por (Issuer):** A Autoridade Certificadora (CA) reconhecida que validou o domínio (ex: Let's Encrypt, DigiCert).
+        
+    -   **Validade:** O período de vigência do certificado.
+        
+4.  _Dica:_ Na aba **Security** do próprio DevTools, você também pode visualizar os detalhes do algoritmo de criptografia e a versão do TLS utilizada na conexão (como TLS 1.2 ou TLS 1.3).
