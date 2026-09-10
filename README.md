@@ -48,7 +48,6 @@ git clone git@github.com:usuario/repositorio.git
 
 #### A clonagem por HTTPS
 (git clone [https://github.com/usuario/repositorio.git](https://github.com/usuario/repositorio.git)) funciona imediatamente sem pré-configuração, mas exige a validação de um token no primeiro envio de código. Com SSH, há a etapa prévia de vincular as chaves, mas as interações subsequentes ocorrem de forma transparente, pois o servidor GitHub valida automaticamente a sua chave privada local com a chave pública cadastrada.
-
 # Desafio 7
 
 
@@ -106,3 +105,46 @@ A criptografia previne ataques como _Man-in-the-Middle_ (interceptação e alter
     -   **Validade:** O período de vigência do certificado.
         
 4.  _Dica:_ Na aba **Security** do próprio DevTools, você também pode visualizar os detalhes do algoritmo de criptografia e a versão do TLS utilizada na conexão (como TLS 1.2 ou TLS 1.3).
+# Desafio 8
+
+
+## **Docker** 
+É uma plataforma de containerização de código aberto que permite empacotar uma aplicação e todas as suas dependências em uma unidade padronizada chamada **container**.
+
+O Docker resolve o clássico problema do "na minha máquina funciona", eliminando inconsistências entre os ambientes de desenvolvimento, teste e produção. Um **container** é um ambiente isolado em nível de processo que executa sobre o sistema operacional hospedeiro. Em vez de virtualizar todo o hardware para rodar um novo sistema operacional, o container compartilha o Kernel do sistema hospedeiro e isola apenas as bibliotecas, variáveis e binaries necessários para a aplicação funcionar.
+
+**Diferenças entre Containers (Docker) e Máquinas Virtuais (VMs)**
+
+| Característica | Container (Docker) | Máquina Virtual (VM) |
+|--|--|--|
+| Arquitetura | Compartilha o Kernel do SO hospedeiro | Inclui um SO Convidado (_Guest OS_) completo |
+|Consumo de Recursos|Mínimo (MBs de RAM e CPU sob demanda)|Alto (reserva GBs de RAM e vCPUs dedicadas)|
+|Tempo de Inicialização|Segundos ou milissegundos|Minutos|
+|Tamanho no Disco|Leve (geralmente dezenas ou centenas de MBs)|Pesado (dezenas de Gigabytes por imagem)|
+|Isolamento|A nível de processo (via _namespaces_ e _cgroups_)|A nível de hardware (via _Hypervisor_)|
+
+**Passo a Passo Prático: Executando e Gerenciando Containers**
+
+**1. Instalar o Docker** Faça o download do **Docker Desktop** (Windows/macOS) ou instale o **Docker Engine** (Linux) a partir do site oficial (`docker.com`). Certifique-se de que o Docker esteja em execução no seu sistema.
+
+**2. Executar um container a partir de uma imagem pública** Abra o terminal e execute o comando a seguir para baixar a imagem oficial do servidor Nginx e subir um container:
+`docker run -d -p 8080:80 --name meu-web-server nginx`
+-   Parâmetro `-d`: Executa o container em segundo plano (_detached mode_).
+    
+-   Parâmetro `-p 8080:80`: Redireciona a porta 8080 da sua máquina física para a porta 80 dentro do container.
+    
+-   Parâmetro `--name meu-web-server`: Define um nome para facilitar o gerenciamento.
+    
+
+_(Você pode testar abrindo `http://localhost:8080` no seu navegador)_.
+
+**3. Listar os containers em execução** Para listar todos os containers atualmente em execução na máquina, utilize:
+`docker ps`
+
+_(Para listar todos os containers, incluindo os parados, utilize `docker ps -a`)_.
+
+**4. Interromper e remover o container** Para parar o container em execução:
+`docker stop meu-web-server`
+
+Para remover o container interrompido do seu sistema:
+`docker rm meu-web-server`
