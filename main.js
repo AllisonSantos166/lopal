@@ -17,11 +17,6 @@ alert(`Olá, bem vindo ${user}!`)
         alert(`A multiplicação é ${mul}`)
         alert(`A divisão é ${div}`)
 
-        console.log("A soma é", sum)
-        console.log("A subtração é", sub)
-        console.log("A multiplicação é", mul)
-        console.log("A divisão é", div)
-
     let idade = +prompt("Informe sua idade: ")
     
     if(idade >= 18){
@@ -32,10 +27,32 @@ alert(`Olá, bem vindo ${user}!`)
     }
     
     let numero = +prompt("Informe um número: ")
-
+    
     if (numero % 2 === 0){
         alert("O número é par")
     }
     else {
         alert("O número é impar")
     }
+    
+    let prim_numero = +prompt("Informe o primeiro número: ")
+    let segun_numero = +prompt("Informe o segundo número: ")
+    let terc_numero = +prompt("Informe o terceiro número: ")
+    
+    let maior = Math.max(prim_numero, segun_numero, terc_numero)
+    
+    alert(`O maior número é ${maior}`)
+    
+    alert("Critério de avaliação: \n Maior que 6 = aprovado \n Maior que 4 = Recuperação \n Menos que 4 = Reprovado")
+    let nota = +prompt("Informe sua nota: ")
+    
+    if (nota >= 6){
+        alert("Aprovado")
+    }
+    else if (nota >= 4){
+        alert("Recuperação")
+    }
+    else{
+        alert("Reprovado")
+    }
+    
